@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  circulo:
+    build: ./circulo
+    ports:
+      - "5000:5000"
+    container_name: microservicio-circulo
+
+  cuadrado:
+    build: ./cuadrado
+    ports:
+      - "5001:5001"
+    container_name: microservicio-cuadrado
+
+  triangulo:
+    build: ./triangulo
+    ports:
+      - "5002:5002"
+    container_name: microservicio-triangulo
