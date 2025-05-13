@@ -1,0 +1,61 @@
+version: '3.9'
+services:
+  suma:
+    build: ./suma
+    ports:
+      - "8001:8000"
+    networks:
+      - shape-net
+
+  resta:
+    build: ./resta
+    ports:
+      - "8002:8000"
+    networks:
+      - shape-net
+
+  division:
+    build: ./division
+    ports:
+      - "8004:8000"
+    networks:
+      - shape-net
+    depends_on:
+      - db
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=ecuaciones
+
+  ecuacion:
+    build: ./ecuacion
+    ports:
+      - "8003:8000"
+    networks:
+      - shape-net
+    depends_on:
+      - suma
+      - resta
+      - division
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DATABASE=ecuaciones
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=root_password
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - shape-net
+
+networks:
+  shape-net:
+    driver: bridge
+
+volumes:
+  db-data:
