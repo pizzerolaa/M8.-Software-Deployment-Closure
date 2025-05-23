@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: microservicios-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /suma(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: suma
+            port:
+              number: 8000
+      - path: /resta(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: resta
+            port:
+              number: 8000
+      - path: /division(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: division
+            port:
+              number: 8000
+      - path: /ecuacion(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: ecuacion
+            port:
+              number: 8000

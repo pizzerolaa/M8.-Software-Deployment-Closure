@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: division-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: division
+  template:
+    metadata:
+      labels:
+        app: division
+    spec:
+      containers:
+      - name: division
+        image: division:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MYSQL_HOST
+          value: mysql
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: username
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: password
+        - name: MYSQL_DATABASE
+          value: ecuaciones
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: division
+spec:
+  selector:
+    app: division
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: ClusterIP
