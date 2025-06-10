@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.8'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
@@ -23,6 +23,6 @@ jobs:
           pip install pytest
 
       - name: Run tests
-        working-directory: Automatizacion_GitHubActions_pytest
         run: |
-          pytest tests/
+          export PYTHONPATH="${PYTHONPATH}:${GITHUB_WORKSPACE}/Automatizacion_GitHubActions_pytest"
+          pytest Automatizacion_GitHubActions_pytest/tests/
