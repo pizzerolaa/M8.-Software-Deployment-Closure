@@ -205,3 +205,4 @@ El proyecto también incluye un archivo compose.yaml para desplegar con Docker C
 ```bash
 docker-compose up --build
 ```
+
