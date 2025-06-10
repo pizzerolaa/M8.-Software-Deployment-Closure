@@ -23,6 +23,6 @@ jobs:
           pip install pytest
 
       - name: Run tests
+        working-directory: Automatizacion_GitHubActions_pytest
         run: |
-          cd Automatizacion_GitHubActions_pytest
           pytest tests/
